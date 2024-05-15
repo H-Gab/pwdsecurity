@@ -26,4 +26,4 @@ https://github.com/jgolbeck/petnames
 https://www.kaggle.com/code/residentmario/pet-names-versus-baby-names/input?select=dogNames2.csv
 
 #### First names (concerning family relatives)
-https://pypi.org/project/names-dataset/
+https://pypi.org/project/names-dataset/!<>
