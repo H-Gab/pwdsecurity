@@ -7,9 +7,9 @@ def extract_dates(dates_str):
     
     for date in dates:
         parts = date.split('/')
-        day = int(parts[0]) if parts[0].isdigit() else None  # Jour (converti en int si possible)
-        month = int(parts[1]) if parts[1].isdigit() else None  # Mois (converti en int si possible)
-        year = int(parts[2]) if len(parts) > 2 and parts[2].isdigit() else None  # Année (converti en int si possible)
+        day = parts[0] if parts[0].isdigit() else None  # Jour (converti en int si possible)
+        month = parts[1] if parts[1].isdigit() else None  # Mois (converti en int si possible)
+        year = parts[2] if len(parts) > 2 and parts[2].isdigit() else None  # Année (converti en int si possible)
         
         date_parts.append([day, month, year])
     
@@ -36,25 +36,41 @@ def read_csv_data(file_path):
     return first_names, important_names, date_parts_list, misc_items
 
 def format_dates(dates):
-    dates_list = []
+    all_dates_list = []
     formatted_date=""
+    print(formatted_date)
     for d in dates:
-        if len(d)==4 :
-            formatted_date = d[2:]
-            dates_list.append(formatted_date)
+        dates_list = []
+        day = d[0]
+        if str(int(day)) != day :
+            dates_list.append([day,str(int(day))])
+        else :
+            dates_list.append([day])
 
-        formatted_date = str(int(d)) # remove leading 0
-        dates_list.append(formatted_date)
+        month = d[1]
+        if str(int(month)) != month :
+            dates_list.append([month,str(int(month))])
+        else :
+            dates_list.append([month])
 
-    return dates_list
+        year = d[2]
+        if year != None :
+            dates_list.append([year,str(year)[2:]])
+        else :
+            dates_list.append(None)
+            
+
+        #formatted_date = str(int(d)) # remove leading 0
+        all_dates_list.append(dates_list)
+
+    return all_dates_list
 
 
 # Example usage:
 file_path = 'data.csv'
 first_names, important_names, dates, misc_items = read_csv_data(file_path)
 
-#print(format_dates(dates))
-
+print(format_dates(dates))
 print("First Names:", first_names)
 print("Important Names:", important_names)
 print("Dates:", dates)
