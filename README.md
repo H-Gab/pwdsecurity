@@ -9,6 +9,8 @@ animals : find animals names
 
 genDic : function to aggregate everything in order to create different passwords
 
+- option to choose the complexity of the leet (none,basic,complex)
+
 ## Resources
 
 https://www.ibm.com/docs/en/baw/20.x?topic=security-characters-that-are-valid-user-ids-passwords

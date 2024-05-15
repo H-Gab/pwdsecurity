@@ -65,13 +65,14 @@ def format_dates(dates):
 
     return all_dates_list
 
-
-# Example usage:
+'''
 file_path = 'data.csv'
 first_names, important_names, dates, misc_items = read_csv_data(file_path)
 
-#print(format_dates(dates))
+print(format_dates(dates))
 print("First Names:", first_names)
 print("Important Names:", important_names)
 print("Dates:", dates)
 print("Miscellaneous Items:", misc_items)
+'''
+
