@@ -40,21 +40,24 @@ def generate_leet_alternatives_for_names(names_list, file):
 
     return all_leet_alternatives
 
-file = 'csv/leet_basic.csv'  
+def leet() :
+    file = 'csv/leet_basic.csv'  
+    leets = []
 
-first_names, important_names,_,_ = read_csv_data('data.csv')
-names = first_names+important_names
-names = possible_variations(names)
+    first_names, important_names,_,_ = read_csv_data('data.csv')
+    names = first_names+important_names
+    
+    names = possible_variations(names)
+    
 
-# Read leet mapping from CSV file
-leet_mapping = import_mapping(file)
+    # Generate leet alternatives for the name
+    name_to_leet_alternatives = generate_leet_alternatives_for_names(names, file)
 
-# Generate leet alternatives for the name
-name_to_leet_alternatives = generate_leet_alternatives_for_names(names, file)
+    # Print the generated alternatives for each name
+    for name, alternatives in name_to_leet_alternatives.items():
+        print(f"Leet alternatives for '{name}':")
+        for alternative in alternatives:
+            leets.append(alternative)  
+        print(leets)
 
-# Print the generated alternatives for each name
-for name, alternatives in name_to_leet_alternatives.items():
-    print(f"Leet alternatives for '{name}':")
-    for alternative in alternatives:
-        print(alternative)
-    print()  # Add empty line for readability
+leet() # Uncomment this to test

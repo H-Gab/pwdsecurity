@@ -10,6 +10,7 @@ animals : find animals names
 genDic : function to aggregate everything in order to create different passwords
 
 - option to choose the complexity of the leet (none,basic,complex)
+- option to concatenate the dates with special characters
 
 ## Resources
 

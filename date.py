@@ -1,6 +1,13 @@
 from extractInformations import read_csv_data,format_dates
 
-def creat_possible_date(dates):
+def creat_possible_date():
+
+    _, _, dates, _ = read_csv_data('data.csv')
+
+    dates = format_dates(dates)
+    
+    print(dates,'\n\n')
+
     all_possibility=[]
     for d in dates :
         for a in d[0] :
@@ -18,12 +25,11 @@ def creat_possible_date(dates):
                         all_possibility.append(b+a+c)
                         all_possibility.append(c+b)
                         all_possibility.append(b+c)
+
+    print(all_possibility)
     return all_possibility
 
+creat_possible_date()
 
 
-file_path = 'data.csv'
-first_names, important_names, dates, misc_items = read_csv_data(file_path)
-print(format_dates(dates))
-date= format_dates(dates)
-print(creat_possible_date(date))
+

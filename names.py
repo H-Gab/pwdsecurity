@@ -27,6 +27,7 @@ def possible_variations(names):
         unique_nicknames = list(set(nicknames))  # Remove duplicates from nicknames list
         all_possible_nicknames.append(unique_nicknames)
 
+    all_possible_nicknames = [n for n in all_possible_nicknames if n!=['']]
     return all_possible_nicknames
 
 names = first_names+important_names
