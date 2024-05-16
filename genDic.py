@@ -31,7 +31,7 @@ def main(): #Ajouter args plus tard
     '+',
     '=']
     
-    # Generate a unique output file name
+    # Generate file name
     file_name = f"output_{uuid.uuid4().hex}.txt"
     file_path = os.path.join('.', file_name)
 
@@ -40,14 +40,14 @@ def main(): #Ajouter args plus tard
     names = leet()
     dates = creat_possible_date()  
 
-    # Generate all combinations of names, dates, and special characters
+    # Generate all combinations
     all_combinations = []
     for name, date, special_char in product(names, dates, special_chars):
         # Concatenate name, date, and special character in different combinations
         combinations = [
-            f"{special_char}{name}{date}",  # Special char + name + date
-            f"{name}{special_char}{date}",  # Name + special char + date
-            f"{name}{date}{special_char}"   # Name + date + special char
+            f"{special_char}{name}{date}",  
+            f"{name}{special_char}{date}", 
+            f"{name}{date}{special_char}"   
         ]
         all_combinations.extend(combinations)
 
@@ -60,8 +60,6 @@ def main(): #Ajouter args plus tard
             file.write(str(pwd)+'\n')
 
     print(f"Content successfully written to '{file_path}'.")
-
-    print("Text")  # Continue with additional logic as needed
 
 main()
 
