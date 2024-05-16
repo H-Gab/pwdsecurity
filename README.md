@@ -1,8 +1,8 @@
 # pwdsecurity
 
-Leet, date handling
-Nicknames handling : convert names into nicknames
-country : deduct informations from countries ? Famous sports/artists/groups...
+Leet, date handling   
+Nicknames handling : convert names into nicknames   
+country : deduct informations from countries ? Famous sports/artists/groups...   
 
 genDic : function to aggregate everything in order to create different passwords
 
