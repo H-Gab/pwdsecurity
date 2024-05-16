@@ -59,5 +59,6 @@ def leet() :
         for alternative in alternatives:
             leets.append(alternative)  
         print(leets)
+    return leets
 
 leet() # Uncomment this to test
