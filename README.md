@@ -1,16 +1,16 @@
 # pwdsecurity
 
-Leet : fait de remplacer a par @,4 ... -> faire un dictionnaire/liste/csv de correspondances
-Date handling : trouver un moyen de gérer les dates (changer ordre, différentes combinaisons...)
-Dictionnary : find a good dictionnary to modify (John the ripper ?)
-nickNames : convert names into nicknames
+Leet, date handling
+Nicknames handling : convert names into nicknames
 country : deduct informations from countries ? Famous sports/artists/groups...
-animals : find animals names
 
 genDic : function to aggregate everything in order to create different passwords
 
+## To do list
+
 - option to choose the complexity of the leet (none,basic,complex)
 - option to concatenate the dates with special characters
+- add time/storage estimator and the possibility to continue/teminate the process
 
 ## Resources
 
