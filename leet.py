@@ -16,31 +16,43 @@ def import_mapping(file):
 
     return leet_mapping
 
-def generate_leet_alternatives(name, leet_mapping):
+def generate_leet_alternatives(name, leet_mapping, mode):
     name = name.lower()
+    
+    if mode == 'simple':
+        leet_alternatives = set([name])  # Start with the original name in a set to avoid duplicates
+        for i, char in enumerate(name):
+            if char in leet_mapping:
+                leet_equivalents = leet_mapping[char]
+                for leet_char in leet_equivalents:
+                    # Create a new alternative by replacing the character at position i
+                    new_name = name[:i] + leet_char + name[i+1:]
+                    leet_alternatives.add(new_name)
+    
+    else:
+        leet_alternatives = [""]
+        for char in name:
+            if char in leet_mapping:
+                leet_equivalents = leet_mapping[char]
+            else:
+                leet_equivalents = [char]
+            
+            leet_alternatives = [combo + substitute for combo in leet_alternatives for substitute in leet_equivalents]
 
-    # Generate all possible leet alternatives
-    leet_alternatives = [""]
-    for char in name:
-        if char in leet_mapping:
-            leet_equivalents = leet_mapping[char]
+    return list(leet_alternatives)
 
-        leet_alternatives = [combo + substitute for combo in leet_alternatives for substitute in leet_equivalents]
-
-    return leet_alternatives
-
-def generate_leet_alternatives_for_names(names_list, file):
+def generate_leet_alternatives_for_names(names_list, file, mode):
     leet_mapping = import_mapping(file)
 
     all_leet_alternatives = {}
     for name_group in names_list:
         for name in name_group:
-            alternatives = generate_leet_alternatives(name, leet_mapping)
+            alternatives = generate_leet_alternatives(name, leet_mapping, mode)
             all_leet_alternatives[name] = alternatives
 
     return all_leet_alternatives
 
-def leet(leet_file) :
+def leet(leet_file,mode) :
     file = leet_file  
     leets = []
 
@@ -51,7 +63,7 @@ def leet(leet_file) :
     
 
     # Generate leet alternatives for the name
-    name_to_leet_alternatives = generate_leet_alternatives_for_names(names, file)
+    name_to_leet_alternatives = generate_leet_alternatives_for_names(names, file, mode)
 
     # Print the generated alternatives for each name
     for name, alternatives in name_to_leet_alternatives.items():
@@ -61,4 +73,4 @@ def leet(leet_file) :
         #print(leets)
     return leets
 
-leet('csv/leet_basic.csv') # Uncomment this to test
+leet('csv/leet_basic.csv','all') # Uncomment this to test

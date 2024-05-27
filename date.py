@@ -6,7 +6,7 @@ def creat_possible_date():
 
     dates = format_dates(dates)
     
-    print(dates,'\n\n')
+    #print(dates,'\n\n')
 
     all_possibility=[]
     for d in dates :
@@ -26,7 +26,7 @@ def creat_possible_date():
                         all_possibility.append(c+b)
                         all_possibility.append(b+c)
 
-    print(all_possibility)
+    #print(all_possibility)
     return all_possibility
 
 creat_possible_date()

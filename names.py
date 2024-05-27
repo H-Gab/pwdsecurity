@@ -31,4 +31,4 @@ def possible_variations(names):
     return all_possible_nicknames
 
 names = first_names+important_names
-print(possible_variations(names))
+#print(possible_variations(names))

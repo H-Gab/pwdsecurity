@@ -40,52 +40,120 @@ def main(args): #Ajouter args plus tard
     combinations=[]
     if (args.leet == 'none') :
         first_names, important_names,_,_ = read_csv_data('data.csv')
-        names=first_names+important_names
-    elif (args.leet == 'simple'):
-        print("Option not working at the moment")
-    elif (args.leet == 'basic'):
-        names = leet('csv/leet_basic.csv')
-    elif (args.leet == 'complex'):
-        names = leet('csv/leet_complex.csv')
-    
-    print(names)
-    dates = creat_possible_date()  
-
-    if (args.time) :
-        if (args.special_characters):
-            a = len(names) * len(dates) * len(special_chars) * 3
-            t = a/7500
+        
+        if important_names and any(name.strip() for name in important_names):
+            names = first_names + important_names
         else:
-            a = len(names) * len(dates) * 2
-            t = a/7500
+            names = first_names
+    elif (args.leet == 'simple'):
+        names = leet('csv/leet_basic.csv','simple')
+    elif (args.leet == 'basic'):
+        names = leet('csv/leet_basic.csv','all')
+    elif (args.leet == 'complex'):
+        names = leet('csv/leet_complex.csv','all')
+    
+    #print(names)
+    dates = creat_possible_date()  
+    _,_,_,misc = read_csv_data('data.csv')
+
+    if (args.verbose):
+        print(names)
+        print(dates)
+        print(misc)
+
+    response = 'n'
+    if (args.time) :
+        a = 0
+        if (args.special_characters):
+            a += len(names) * len(dates) * len(special_chars) * 3
+            if (args.misc):
+                b = len(names) * len(misc) * len(special_chars) * 3
+                c = len(misc) * len(dates) * len(special_chars) * 3
+                a += a + b + c
+        else : 
+            if (args.misc):
+                print(len(misc))
+                print(len(dates))
+                print(len(names))
+                a += len(misc) * len(dates) * 2
+                a += len(names) * len(misc) * 2
+
+        a += len(names) * len(dates) * 2
+        t = a/7500
         print(f"Estimated time of creation : {t}s; Number of combination : {a}")
-    else :
+        response = input("Do you want to start? (y/n): ")
+
+    if(not args.time or response.lower() == 'y') :
         start_time =time.time()
         # Generate all combinations
+        all_combinations = []
         if (args.special_characters):
-            all_combinations = []
-            for name, date, special_char in product(names, dates, special_chars):
+            if (args.misc):
+                unique_combinations = set()
+                for name, date, special_char in product(names, dates, special_chars):
+                    # Concatenate name, date, and special character in different combinations
+                    combinations = [
+                        f"{special_char}{name}{date}",  
+                        f"{name}{special_char}{date}", 
+                        f"{name}{date}{special_char}",
+                    ]
+                    all_combinations.extend(combinations)
+                for date, special_char,misc in product(dates, special_chars,misc):
+                    # Concatenate name, date, and special character in different combinations
+                    combinations = [
+                        f"{special_char}{misc}{date}",  
+                        f"{misc}{special_char}{date}", 
+                        f"{misc}{date}{special_char}"
+                    ]
+                    all_combinations.extend(combinations)
+                for name, special_char,misc in product(names, special_chars,misc):
+                    # Concatenate name, date, and special character in different combinations
+                    combinations = [
+                        f"{special_char}{name}{misc}",  
+                        f"{name}{special_char}{misc}", 
+                        f"{name}{misc}{special_char}"
+                    ]
+                    all_combinations.extend(combinations)
+                
+            else :
+                for name, date, special_char in product(names, dates, special_chars):
+                    # Concatenate name, date, and special character in different combinations
+                    combinations = [
+                        f"{special_char}{name}{date}",  
+                        f"{name}{special_char}{date}", 
+                        f"{name}{date}{special_char}"   
+                    ]
+                    all_combinations.extend(combinations)
+
+        if (args.misc):
+            unique_combinations = set()  
+            for name, date, arg in product(names, dates, misc):
                 # Concatenate name, date, and special character in different combinations
                 combinations = [
-                    f"{special_char}{name}{date}",  
-                    f"{name}{special_char}{date}", 
-                    f"{name}{date}{special_char}"   
+                    f"{arg}{name}",  
+                    f"{name}{arg}",
+                    f"{date}{arg}",  
+                    f"{arg}{date}",  
                 ]
-                all_combinations.extend(combinations)
-        else :
-            all_combinations = []
-            for name, date in product(names, dates):
+                unique_combinations.update(combinations)  # Add combinations to the set
+            all_combinations.extend(list(unique_combinations))
+
+        for name, date in product(names, dates):
                 # Concatenate name, date, and special character in different combinations
                 combinations = [
                     f"{date}{name}",  
                     f"{name}{date}",  
                 ]
                 all_combinations.extend(combinations)
+            
+
+        if (args.verbose):
+            for idx, combination in enumerate(all_combinations, start=1):
+                combinations.append(combination)
+                print(f"Combination {idx}: {combination}")
 
         for idx, combination in enumerate(all_combinations, start=1):
-            combinations.append(combination)
-            print(f"Combination {idx}: {combination}")
-
+                combinations.append(combination)
         with open(file_path, 'w') as file:
             for pwd in combinations:
                 file.write(str(pwd)+'\n')
@@ -94,19 +162,29 @@ def main(args): #Ajouter args plus tard
         total_time = end_time - start_time
         print(f"Time of Execution : '{total_time}'.")
         print(f"Content successfully written to '{file_path}'.")
+        if (args.compare != 'none'):
+            if args.compare in all_combinations:
+                print(f"The password '{args.compare}' is in the list of combinations.")
+            else:
+                print(f"The password '{args.compare}' is NOT in the list of combinations.")
+
+        
+
 
 #main()
 
 
 if __name__ == "__main__":
     # Create argument parser
-    parser = argparse.ArgumentParser(description="Description of your script.")
+    parser = argparse.ArgumentParser(description="Creation of a list of possible password using personal information.")
 
     # Add arguments to the parser
     parser.add_argument('-l', '--leet', type=str, default='none', help='Leet level (-l [none,basic,complex], default none)')
     parser.add_argument('-sc', '--special_characters', action='store_true', help='Enable special characters if flag is present')
     parser.add_argument('-t', '--time', action='store_true', help='Enable special characters if flag is present')
-    parser.add_argument('arg1', type=str, default='none', help='Leet (-l [none,basic,complex], default none)')
+    parser.add_argument('-v', '--verbose', action='store_true', help='Enable the verbose')
+    parser.add_argument('-m', '--misc', action='store_true', help='Enable the miscellaneous')
+    parser.add_argument('-c', '--compare', type=str, default='none', help='Compare your password with the created dictionary')
     #parser.add_argument('--option1', type=int, default=0, help='Description of option 1')
 
     # Parse the command-line arguments
