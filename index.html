@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Information</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <script src="./app.js" defer></script>
+</head>
+<body>
+    <div id="collect">
+        <form>
+            <p>
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="fname" value="" />
+                <button type="button" onclick="printValue('fname')">Add</button>
+            </p>
+            <p id="fname_display"></p>
+            
+            <p>
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lname" value="" />
+                <button type="button" onclick="printValue('lname')">Add</button>
+            </p>
+            <p id="lname_display"></p>
+            
+            <p>
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" value="" />
+                <button type="button" onclick="printValue('email')">Add</button>
+            </p>
+            <p id="email_display"></p>
+            
+            <p>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="" />
+                <button type="button" onclick="printValue('username')">Add</button>
+            </p>
+            <p id="username_display"></p>
+            
+            <p>
+                <button id="btnSave" type="button">Save</button>
+            </p>
+        </form>
+    </div>
+    <div id="display">
+        <p>
+            <button id="btnExport" type="button" onclick="exportCSV()">Export</button>
+        </p>
+    </div>
+</body>
+</html>
