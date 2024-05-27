@@ -10,12 +10,18 @@ index.html : Form to create a correctly formatted csv
 
 ## Usage
 
-## To do list
+To use this program you need to launch gendic.py using python3.
 
-- option to choose the complexity of the leet (none,basic,complex)
-- option to concatenate the dates with special characters
-- add time/storage estimator and the possibility to continue/teminate the process
-- HTML/js interface with a form to provide data & the password and compare with the file.
+You can put different thing as input : 
+-l : the type of leet you want(none, simple, basic and complex)
+-sc : if added as input the program will include the special character inside the dictionary creation.
+-m : if added as input the program will include the miscmiscellaneous information inside the dictionary creation.
+-t : Will print the estimated time, estimated number of combination and the estimated size of file created.
+-v : Will activate the verbose
+-c : You need to add the password you want to compare after the -c
+
+Example of command
+python3 .\genDic.py -l simple -t -sc -m -c Nathan1707
 
 ## Resources
 
