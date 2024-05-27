@@ -63,24 +63,28 @@ def main(args): #Ajouter args plus tard
 
     response = 'n'
     if (args.time) :
+        print(len(misc))
+        print(len(dates))
+        print(len(names))
         a = 0
         if (args.special_characters):
             a += len(names) * len(dates) * len(special_chars) * 3
             if (args.misc):
-                b = len(names) * len(misc) * len(special_chars) * 3
-                c = len(misc) * len(dates) * len(special_chars) * 3
-                a += a + b + c
+                a += len(names) * len(misc) * len(special_chars) * 3
+                a += len(misc) * len(dates) * len(special_chars) * 3
         else : 
             if (args.misc):
-                print(len(misc))
-                print(len(dates))
-                print(len(names))
                 a += len(misc) * len(dates) * 2
                 a += len(names) * len(misc) * 2
 
         a += len(names) * len(dates) * 2
-        t = a/7500
-        print(f"Estimated time of creation : {t}s; Number of combination : {a}")
+        if (not args.verbose):
+            t = a/1000000
+        else :
+            t = a/7500
+        
+        size = a*(110000000/8100000)
+        print(f"Estimated time of creation : {t}s; Estimated number of combination : {a}; Estimated size of file : {int(size)}o")
         response = input("Do you want to start? (y/n): ")
 
     if(not args.time or response.lower() == 'y') :
@@ -127,16 +131,22 @@ def main(args): #Ajouter args plus tard
 
         if (args.misc):
             unique_combinations = set()  
-            for name, date, arg in product(names, dates, misc):
+            for name, arg  in product(names, misc):
                 # Concatenate name, date, and special character in different combinations
                 combinations = [
                     f"{arg}{name}",  
-                    f"{name}{arg}",
-                    f"{date}{arg}",  
-                    f"{arg}{date}",  
+                    f"{name}{arg}", 
                 ]
                 unique_combinations.update(combinations)  # Add combinations to the set
             all_combinations.extend(list(unique_combinations))
+
+            for misc, date in product(misc, dates):
+                # Concatenate name, date, and special character in different combinations
+                combinations = [
+                    f"{date}{misc}",  
+                    f"{name}{date}",  
+                ]
+                all_combinations.extend(combinations)
 
         for name, date in product(names, dates):
                 # Concatenate name, date, and special character in different combinations

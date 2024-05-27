@@ -7,9 +7,9 @@ def extract_dates(dates_str):
     
     for date in dates:
         parts = date.split('-')
-        day = parts[2] if parts[0].isdigit() else None  
+        day = parts[2] if parts[2].isdigit() else None  
         month = parts[1] if parts[1].isdigit() else None  
-        year = parts[0] if parts[0]!="0000" and parts[2].isdigit() else None 
+        year = parts[0] if parts[0]!="0000" and parts[0].isdigit() else None 
         
         date_parts.append([day, month, year])
     
