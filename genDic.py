@@ -63,9 +63,6 @@ def main(args): #Ajouter args plus tard
 
     response = 'n'
     if (args.time) :
-        print(len(misc))
-        print(len(dates))
-        print(len(names))
         a = 0
         if (args.special_characters):
             a += len(names) * len(dates) * len(special_chars) * 3
