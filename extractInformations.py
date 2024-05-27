@@ -3,13 +3,13 @@ import re
 
 def extract_dates(dates_str):
     date_parts = []
-    dates = [date.strip() for date in dates_str.split(';')]  # Sépare les dates par ';'
+    dates = [date.strip() for date in dates_str.split(';')]
     
     for date in dates:
-        parts = date.split('/')
-        day = parts[0] if parts[0].isdigit() else None  # Jour (converti en int si possible)
-        month = parts[1] if parts[1].isdigit() else None  # Mois (converti en int si possible)
-        year = parts[2] if len(parts) > 2 and parts[2].isdigit() else None  # Année (converti en int si possible)
+        parts = date.split('-')
+        day = parts[2] if parts[0].isdigit() else None  
+        month = parts[1] if parts[1].isdigit() else None  
+        year = parts[0] if parts[0]!="0000" and parts[2].isdigit() else None 
         
         date_parts.append([day, month, year])
     
@@ -18,7 +18,7 @@ def extract_dates(dates_str):
 def read_csv_data(file_path):
     first_names = []
     important_names = []
-    date_parts_list = []  # Liste de listes pour les parties de date
+    date_parts_list = [] 
     misc_items = []
 
     with open(file_path, newline='') as csvfile:
@@ -27,7 +27,7 @@ def read_csv_data(file_path):
             first_names.append(row['First Name'])
             important_names.extend([name.strip() for name in row['Important Names'].split(';')])
             
-            # Extraction des parties de date
+            # Extract dates parts
             date_parts = extract_dates(row['Dates'])
             date_parts_list.extend(date_parts)
             

@@ -5,49 +5,161 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Information</title>
-    <link rel="stylesheet" href="./css/main.css" />
-    <script src="./app.js" defer></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        
+        function exportCSV() {
+            const fname = document.getElementById('fname').value;
+            let Inames = '';
+            let dates = '';
+            let miscs = '';
+
+            $("input[name^='Iname']").each(function() {
+                if (this.value) {
+                    if (Inames !== '') { 
+                        Inames += ';';
+                    }
+                    Inames += this.value;
+                }
+            });
+            $("input[name^='date']").each(function() {
+                if (this.value) {
+                    if (dates !== '') {
+                        dates += ';'; 
+                    }
+                    dates += this.value;
+                }
+            });
+            $("input[name^='misc']").each(function() {
+                if (this.value) {
+                    if (miscs !== '') {
+                        miscs += ';'; 
+                    }
+                    miscs += this.value;
+                }
+            });
+
+            const csvContent = `First Name,Important Names,Dates,Misc\n${fname},${Inames},${dates},${miscs}`;
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'data.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        $(document).ready(function() {
+            let fieldCount = 0;
+
+            function addField(afterElementId, inputType = 'text', namePrefix = '') {
+                const newField = `
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-8">
+                            <input type="${inputType}" class="form-control" name="${namePrefix}" value="" />
+                        </div>
+                    </div>
+                `;
+                $(newField).insertAfter(`#${afterElementId}`);
+            }
+
+
+            $("#addInameField").click(function() {
+                addField('Iname_group', 'text', 'Iname');
+            });
+            $("#addDateField").click(function() {
+                addField('date_group', 'date', 'date');
+            });
+            $("#addMiscField").click(function() {
+                addField('misc_group', 'text', 'misc');
+            });
+        });
+
+    </script>
 </head>
 <body>
-    <div id="collect">
-        <form>
-            <p>
-                <label for="fname">First Name</label>
-                <input type="text" id="fname" name="fname" value="" />
-                <button type="button" onclick="printValue('fname')">Add</button>
-            </p>
-            <p id="fname_display"></p>
-            
-            <p>
-                <label for="lname">Last Name</label>
-                <input type="text" id="lname" name="lname" value="" />
-                <button type="button" onclick="printValue('lname')">Add</button>
-            </p>
-            <p id="lname_display"></p>
-            
-            <p>
-                <label for="email">Date</label>
-                <input type="text" id="date" name="date" value="" />
-                <button type="button" onclick="printValue('date')">Add</button>
-            </p>
-            <p id="email_display"></p>
-            
-            <p>
-                <label for="username">Misc</label>
-                <input type="text" id="misc" name="misc" value="" />
-                <button type="button" onclick="printValue('misc')">Add</button>
-            </p>
-            <p id="username_display"></p>
-            
-            <p>
-                <button id="btnSave" type="button">Save</button>
-            </p>
-        </form>
-    </div>
-    <div id="display">
-        <p>
-            <button id="btnExport" type="button" onclick="exportCSV()">Export</button>
-        </p>
+    <div class="container mt-5">
+        <div id="collect">
+            <form>
+                <div class="form-group row" id="fname_group">
+                    <label for="fname" class="col-sm-2 col-form-label">First Name</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="fname" name="fname" value="" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <p id="fname_display"></p>
+                    </div>
+                </div>
+                
+                <div class="form-group row" id="Iname_group">
+                    <label for="Iname" class="col-sm-2 col-form-label">Important Name(s)</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="Iname" name="Iname" value="" />
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-primary" id="addInameField">+</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <p id="Iname_display"></p>
+                    </div>
+                </div>
+                
+                <div class="form-group row" id="date_group">
+                    <label for="date" class="col-sm-2 col-form-label">Date</label>
+                    <div class="col-sm-8">
+                        <input type="date" class="form-control" id="date" name="date" value="" placeholder="DD/MM/YYYY" />
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-primary" id="addDateField">+</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <p id="email_display"></p>
+                    </div>
+                </div>
+                
+                <div class="form-group row" id="misc_group">
+                    <label for="misc" class="col-sm-2 col-form-label">Misc</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="misc" name="misc" value="" />
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-primary" id="addMiscField">+</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <p id="username_display"></p>
+                    </div>
+                </div>
+                
+                <div id="dynamicFields"></div>
+                
+            </form>
+        </div>
+        <div id="display">
+            <div class="form-group row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <button id="btnExport" type="button" class="btn btn-info" onclick="exportCSV()">Export</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
