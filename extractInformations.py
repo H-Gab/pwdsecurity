@@ -38,7 +38,7 @@ def read_csv_data(file_path):
 def format_dates(dates):
     all_dates_list = []
     formatted_date=""
-    print(formatted_date)
+    #print(formatted_date)
     for d in dates:
         dates_list = []
         day = d[0]
