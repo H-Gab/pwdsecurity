@@ -10,7 +10,8 @@ index.html : Form to create a correctly formatted csv
 
 ## Usage
 
-To use this program you need to launch gendic.py using python3.
+
+To use this program you need to launch gendic.py using python3. If you want to use the html yo uwill need to copy past the csv created inside the folder of the program.
 
 You can put different thing as input : 
 -l : the type of leet you want(none, simple, basic and complex)
