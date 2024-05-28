@@ -14,6 +14,8 @@ def creat_possible_date():
             for b in d[1]:
                 all_possibility.append(a+b)
                 all_possibility.append(b+a)
+                all_possibility.append(a)
+                all_possibility.append(b)
 
         if d[2] != None :
             for a in d[0] :
@@ -25,6 +27,7 @@ def creat_possible_date():
                         all_possibility.append(b+a+c)
                         all_possibility.append(c+b)
                         all_possibility.append(b+c)
+                        all_possibility.append(c)
 
     #print(all_possibility)
     return all_possibility

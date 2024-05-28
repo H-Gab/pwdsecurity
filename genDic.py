@@ -65,10 +65,10 @@ def main(args): #Ajouter args plus tard
     if (args.time) :
         a = 0
         if (args.special_characters):
-            a += len(names) * len(dates) * len(special_chars) * 3
+            a += len(names) * len(dates) * len(special_chars) * 6
             if (args.misc):
-                a += len(names) * len(misc) * len(special_chars) * 3
-                a += len(misc) * len(dates) * len(special_chars) * 3
+                a += len(names) * len(misc) * len(special_chars) * 6
+                a += len(misc) * len(dates) * len(special_chars) * 6
         else : 
             if (args.misc):
                 a += len(misc) * len(dates) * 2
@@ -94,9 +94,12 @@ def main(args): #Ajouter args plus tard
                 for name, date, special_char in product(names, dates, special_chars):
                     # Concatenate name, date, and special character in different combinations
                     combinations = [
-                        f"{special_char}{name}{date}",  
-                        f"{name}{special_char}{date}", 
+                        f"{special_char}{name}{date}", 
+                        f"{special_char}{date}{name}", 
+                        f"{name}{special_char}{date}",
+                        f"{date}{special_char}{name}",
                         f"{name}{date}{special_char}",
+                        f"{date}{name}{special_char}",
                     ]
                     all_combinations.extend(combinations)
                 for date, special_char,misc in product(dates, special_chars,misc):
@@ -104,7 +107,10 @@ def main(args): #Ajouter args plus tard
                     combinations = [
                         f"{special_char}{misc}{date}",  
                         f"{misc}{special_char}{date}", 
-                        f"{misc}{date}{special_char}"
+                        f"{misc}{date}{special_char}",
+                        f"{special_char}{date}{misc}",  
+                        f"{date}{special_char}{misc}", 
+                        f"{date}{misc}{special_char}"
                     ]
                     all_combinations.extend(combinations)
                 for name, special_char,misc in product(names, special_chars,misc):
@@ -112,7 +118,10 @@ def main(args): #Ajouter args plus tard
                     combinations = [
                         f"{special_char}{name}{misc}",  
                         f"{name}{special_char}{misc}", 
-                        f"{name}{misc}{special_char}"
+                        f"{name}{misc}{special_char}",
+                        f"{special_char}{misc}{name}",  
+                        f"{misc}{special_char}{name}", 
+                        f"{misc}{name}{special_char}"
                     ]
                     all_combinations.extend(combinations)
                 
